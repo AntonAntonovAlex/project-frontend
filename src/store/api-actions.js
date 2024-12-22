@@ -50,3 +50,11 @@ export const postTemplateAction = createAsyncThunk(
     return data.user.name;
   },
 );
+
+export const getTopicsAction = createAsyncThunk(
+  '/topics',
+  async (_arg, {extra: api}) => {
+    const { data } = await api.get(APIRoute.Topics);
+    return data;
+  },
+);

@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Formik, Form, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { Box, Button, Container, TextField, Typography, Checkbox, FormControlLabel, MenuItem, Select, InputLabel, CircularProgress, Alert } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { postTemplateAction } from '../../store/api-actions';
+import { getTopics } from '../../store/template-process/selectors';
+import { getTopicsAction } from '../../store/api-actions';
 
 const CUSTOM_FIELD_TYPES = ['string', 'textarea', 'int', 'checkbox'];
 const CLOUD_NAME = 'dbl5j7vpo';
@@ -50,6 +52,11 @@ const CreateTemplate = () => {
   const [uploadError, setUploadError] = useState(null);
   const { formatMessage } = useIntl();
   const dispatch = useDispatch();
+  const topics = useSelector(getTopics);
+
+  useEffect(() => {
+    dispatch(getTopicsAction());
+  }, [dispatch]);
 
   const handleImageUpload = async (file, setFieldValue) => {
     setImageUploading(true);
@@ -163,10 +170,12 @@ const CreateTemplate = () => {
                     variant="outlined"
                     margin="dense"
                     error={touched.topic && Boolean(errors.topic)}
-                >
-                    <MenuItem value="Education">Education</MenuItem>
-                    <MenuItem value="Test">Test</MenuItem>
-                    <MenuItem value="Other">Other</MenuItem>
+                    >
+                    {topics.map((topic) => (
+                        <MenuItem key={topic.id} value={topic.value}>
+                            {topic.value}
+                        </MenuItem>
+                    ))}
                 </Select>
                 <FormControlLabel
                     control={
