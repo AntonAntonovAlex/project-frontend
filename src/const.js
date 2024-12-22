@@ -1,5 +1,6 @@
 export const NameSpace = {
     User: 'USER',
+    Template: 'TEMPLATE',
 };
 
 export const AuthorizationStatus = {
@@ -13,11 +14,15 @@ export const APIRoute = {
     Login: '/login',
     Logout: '/logout',
     Users: '/users',
+    Templates: '/template',
+    PostTemplates: '/template/create',
 };
 
 export const AppRoute = {
     Register: '/register',
     Login: '/login',
     Users: '/users',
+    Main: '/',
+    CreateTemplates: '/create-template',
 };
 

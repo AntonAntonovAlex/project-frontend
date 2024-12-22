@@ -1,17 +1,18 @@
-import React from "react";
 import { useIntl, FormattedMessage } from 'react-intl';
 import { LANGUAGES } from "../../i18n/languages";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserName } from "../../store/user-process/selectors";
 import { dropToken } from "../../services/token";
 import { logoutAction } from "../../store/user-process/user-process";
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AppRoute } from "../../const";
 
 const Header = ({ handleLocaleChange }) => {
   const userName = useSelector(getUserName);
   const dispatch = useDispatch();
   const { formatMessage } = useIntl();
+  const location = useLocation();
+  const isUsersPage = location.pathname === AppRoute.Users;
 
   const handleLogout = () => {
     const confirmLogout = window.confirm(
@@ -49,22 +50,29 @@ const Header = ({ handleLocaleChange }) => {
             ))}
           </ul>
         </div>
-        <div className="d-flex align-items-center ms-auto">
+        <div className="d-flex align-items-center ms-auto gap-3">
+          {userName && (
+            <Link
+              to={isUsersPage ? AppRoute.Main : AppRoute.Users}
+              className="btn btn-outline-primary me-3"
+            >
+              {isUsersPage ? (
+                <FormattedMessage id="templates_gallery" />
+              ) : (
+                <FormattedMessage id="user" />
+              )}
+            </Link>
+          )}
           {userName ? (
-            <>
-              <span className="me-3">
-                {userName}
-              </span>
-              <button
-                className="btn btn-outline-danger"
-                onClick={handleLogout}
-              >
+            <div className="d-flex align-items-center gap-3">
+              <span className="fw-bold">{userName}</span>
+              <button className="btn btn-outline-danger" onClick={handleLogout}>
                 <FormattedMessage id="logout" />
               </button>
-            </>
+            </div>
           ) : (
-            <Link to={AppRoute.Login} className="text-primary fw-bold">
-              <FormattedMessage id='non_authorized' />
+            <Link to={AppRoute.Login} className="btn btn-primary">
+              <FormattedMessage id="non_authorized" />
             </Link>
           )}
         </div>

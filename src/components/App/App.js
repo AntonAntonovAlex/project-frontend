@@ -8,6 +8,8 @@ import { Routes, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import Register from '../Register/Register';
 import UsersTable from '../UsersTable/UsersTable';
+import Main from '../Main/Main';
+import CreateTemplate from '../CreateTemplate/CreateTemplate';
 
 function App() {
   const [currentLocale, setCurrentLocale] = useState(getInitialLocale());
@@ -26,6 +28,8 @@ function App() {
       <>
         <Header handleLocaleChange={handleLocaleChange} />
         <Routes>
+          <Route path={AppRoute.Main} element={<Main />}/>
+          <Route path={AppRoute.CreateTemplates} element={<CreateTemplate />}/>
           <Route path={AppRoute.Login} element={<Login />}/>
           <Route path={AppRoute.Register} element={<Register />}/>
           <Route path={AppRoute.Users} element={<UsersTable />}/>

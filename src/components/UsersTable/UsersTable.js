@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUsersAction } from '../../store/api-actions';
 import { getUsers, getAuthorizationStatus } from '../../store/user-process/selectors';
