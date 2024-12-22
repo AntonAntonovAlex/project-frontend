@@ -10,9 +10,13 @@ import Register from '../Register/Register';
 import UsersTable from '../UsersTable/UsersTable';
 import Main from '../Main/Main';
 import CreateTemplate from '../CreateTemplate/CreateTemplate';
+import PrivateRoute from '../private-route/private-route';
+import { useSelector } from 'react-redux';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function App() {
   const [currentLocale, setCurrentLocale] = useState(getInitialLocale());
+  const authorizationStatus = useSelector(getAuthorizationStatus);
   const handleLocaleChange = (value) => {
     setCurrentLocale(value);
     localStorage.setItem('locale', value);
@@ -29,7 +33,16 @@ function App() {
         <Header handleLocaleChange={handleLocaleChange} />
         <Routes>
           <Route path={AppRoute.Main} element={<Main />}/>
-          <Route path={AppRoute.CreateTemplates} element={<CreateTemplate />}/>
+          <Route
+            path={AppRoute.CreateTemplates}
+            element={
+              <PrivateRoute
+                authorizationStatus={authorizationStatus}
+              >
+                <CreateTemplate />
+              </PrivateRoute>
+            }
+          />
           <Route path={AppRoute.Login} element={<Login />}/>
           <Route path={AppRoute.Register} element={<Register />}/>
           <Route path={AppRoute.Users} element={<UsersTable />}/>

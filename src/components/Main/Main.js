@@ -58,7 +58,8 @@ const Main = () => {
                             size="medium"
                             variant="contained"
                             color="primary"
-                            onClick={()=> dispatch(redirectToRoute(AppRoute.CreateTemplates))}
+                            onClick={ () =>
+                                dispatch(redirectToRoute(AppRoute.CreateTemplates))}
                         >
                             <FormattedMessage id='create_template' />
                         </Button>
