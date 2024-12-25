@@ -41,6 +41,15 @@ export const getTemplatesAction = createAsyncThunk(
   },
 );
 
+export const getTemplateByIdAction = createAsyncThunk(
+  '/template/:id',
+  async (id, {extra: api}) => {
+    const { data } = await api.get(`${APIRoute.Templates}/${id}`);
+    console.log(data);
+    return data.template;
+  },
+);
+
 export const postTemplateAction = createAsyncThunk(
   '/template/create',
   async (formattedData, {extra: api, dispatch}) => {

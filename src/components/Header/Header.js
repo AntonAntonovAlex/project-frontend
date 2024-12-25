@@ -1,17 +1,19 @@
-import { useIntl, FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl'; 
 import { LANGUAGES } from "../../i18n/languages";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserName } from "../../store/user-process/selectors";
 import { dropToken } from "../../services/token";
 import { logoutAction } from "../../store/user-process/user-process";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AppRoute } from "../../const";
+import HomeIcon from '@mui/icons-material/Home';
 
 const Header = ({ handleLocaleChange }) => {
   const userName = useSelector(getUserName);
   const dispatch = useDispatch();
   const { formatMessage } = useIntl();
   const location = useLocation();
+  const navigate = useNavigate();
   const isUsersPage = location.pathname === AppRoute.Users;
 
   const handleLogout = () => {
@@ -50,6 +52,14 @@ const Header = ({ handleLocaleChange }) => {
             ))}
           </ul>
         </div>
+        <button
+          className="btn btn-outline-primary ms-3"
+          onClick={() => navigate(AppRoute.Main)}
+          title={formatMessage({ id: 'back_to_main' })}
+        >
+          <HomeIcon />
+        </button>
+
         <div className="d-flex align-items-center ms-auto gap-3">
           {userName && (
             <Link

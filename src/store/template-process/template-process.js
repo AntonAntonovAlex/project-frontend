@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { NameSpace } from "../../const";
-import { getTemplatesAction, getTopicsAction } from "../api-actions";
+import { getTemplatesAction, getTopicsAction, getTemplateByIdAction } from "../api-actions";
 
 const initialState = {
     templates: [],
     topics: [],
+    template: {},
 };
 
 export const templateProcess = createSlice({
@@ -21,6 +22,12 @@ export const templateProcess = createSlice({
         })
         .addCase(getTopicsAction.fulfilled, (state, action) => {
             state.topics = action.payload;
+        })
+        .addCase(getTemplateByIdAction.fulfilled, (state, action) => {
+            state.template = action.payload;
+        })
+        .addCase(getTemplateByIdAction.rejected, (state) => {
+            state.template = {};
         })
     }
 });

@@ -58,8 +58,7 @@ const Main = () => {
                             size="medium"
                             variant="contained"
                             color="primary"
-                            onClick={ () =>
-                                dispatch(redirectToRoute(AppRoute.CreateTemplates))}
+                            onClick={() => dispatch(redirectToRoute(AppRoute.CreateTemplates))}
                         >
                             <FormattedMessage id='create_template' />
                         </Button>
@@ -94,7 +93,11 @@ const Main = () => {
                         </Typography>
                     </CardContent>
                     <CardActions sx={{ marginTop: 'auto' }}>
-                        <Button size="small" color="primary" href={`/template/${template.id}`}>
+                        <Button
+                            size="small"
+                            color="primary"
+                            onClick={() => dispatch(redirectToRoute(`/template/${template.id}`))}
+                        >
                             <FormattedMessage id='view_details' />
                         </Button>
                     </CardActions>

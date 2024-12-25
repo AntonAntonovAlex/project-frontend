@@ -13,6 +13,7 @@ import CreateTemplate from '../CreateTemplate/CreateTemplate';
 import PrivateRoute from '../private-route/private-route';
 import { useSelector } from 'react-redux';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import TemplateDetail from '../TemplateDetail/TemplateDetail';
 
 function App() {
   const [currentLocale, setCurrentLocale] = useState(getInitialLocale());
@@ -43,6 +44,7 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route path={AppRoute.Template} element={<TemplateDetail />}/>
           <Route path={AppRoute.Login} element={<Login />}/>
           <Route path={AppRoute.Register} element={<Register />}/>
           <Route path={AppRoute.Users} element={<UsersTable />}/>

@@ -25,5 +25,6 @@ export const AppRoute = {
     Users: '/users',
     Main: '/',
     CreateTemplates: '/create-template',
+    Template: '/template/:id',
 };
 
