@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getToken } from './token';
+import { toast } from 'react-toastify';
 
 //const BACKEND_URL = 'http://localhost:3000/';
 const BACKEND_URL = 'https://project-backend-vf6r.onrender.com/';
@@ -18,10 +19,20 @@ export const createAPI = () => {
           if (token) {
             config.headers.Authorization = `Bearer ${token}`;
           };
-          
           return config;
         },
-      );
+    );
+
+    api.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response) {
+          toast.warn(error.response.data.message);
+        }
+  
+        throw error;
+      }
+    );
 
     return api;
 };

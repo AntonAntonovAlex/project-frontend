@@ -8,12 +8,15 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import browserHistory from './browser-history';
 import HistoryRouter from './components/history-route/history-route';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <HistoryRouter history={browserHistory}>
+        <ToastContainer />
         <App />
       </HistoryRouter>
     </Provider>

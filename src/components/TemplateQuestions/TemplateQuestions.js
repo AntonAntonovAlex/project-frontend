@@ -1,5 +1,5 @@
 import { Typography, Box, Button, TextField, Checkbox, FormControlLabel } from "@mui/material";
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
@@ -7,6 +7,7 @@ import { postFormAction } from "../../store/api-actions";
 
 const TemplateQuestions = ({ template, isAuthenticated }) => {
     const dispatch = useDispatch();
+    const { formatMessage } = useIntl();
 
     const handleSubmitAnswers = (values) => {
         const transformedAnswers  = Object.entries(values.answers).reduce((acc, [key, value]) => {
@@ -61,7 +62,7 @@ const TemplateQuestions = ({ template, isAuthenticated }) => {
                                         checked={!!values.answers?.[questionKey]}
                                     />
                                 }
-                                label="Answer"
+                                label={formatMessage({ id: 'yes_or_no' })}
                             />
                         ) : null
                     ) : (

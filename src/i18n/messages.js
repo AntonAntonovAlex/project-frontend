@@ -47,6 +47,7 @@ export const messages = {
       write_your_comment: 'Write your comment here...',
       required_comment: 'This field is required',
       no_comments_yet: 'No comments yet',
+      yes_or_no: 'Yes/No',
     },
     [LOCALES.POLISH]: {
       language: 'Polski',
@@ -94,5 +95,6 @@ export const messages = {
       write_your_comment: 'Napisz swój komentarz tutaj...',
       required_comment: 'To pole jest wymagane',
       no_comments_yet: 'Jeszcze nie ma komentarzy',
+      yes_or_no: 'Tak/Nie',
     }
   }
