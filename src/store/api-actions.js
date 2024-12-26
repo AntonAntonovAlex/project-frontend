@@ -67,3 +67,34 @@ export const getTopicsAction = createAsyncThunk(
     return data;
   },
 );
+
+export const postFormAction = createAsyncThunk(
+  '/form',
+  async ({templateId, answers}, {extra: api, dispatch}) => {
+    console.log("postFormAction:", {templateId, answers});
+    const { data } = await api.post(APIRoute.Form, {templateId, answers});
+    console.log('data - ', data.message);
+    dispatch(redirectToRoute(AppRoute.Main));
+    //return data;
+  },
+);
+
+export const getCommentsAction = createAsyncThunk(
+  '/comments/:templateId',
+  async (templateId, {extra: api}) => {
+    console.log("getCommentsAction:", templateId);
+    const { data } = await api.get(`${APIRoute.Comments}/${templateId}`);
+    console.log(data);
+    return data;
+  },
+);
+
+export const addCommentAction = createAsyncThunk(
+  '/comments',
+  async ({templateId, text}, {extra: api, dispatch}) => {
+    const { data } = await api.post(APIRoute.Comments, {templateId, text});
+    console.log('data - ', data);
+    //dispatch(redirectToRoute(AppRoute.Main));
+    //return data;
+  },
+);

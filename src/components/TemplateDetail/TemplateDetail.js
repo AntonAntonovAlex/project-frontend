@@ -74,7 +74,7 @@ const TemplateDetail = () => {
                         <Tab label={<FormattedMessage id='comments' />} />
                     </Tabs>
                     {activeTab === 0 && <TemplateQuestions template={template} isAuthenticated={isAuthenticated} />}
-                    {activeTab === 1 && <TemplateComments isAuthenticated={isAuthenticated} />}
+                    {activeTab === 1 && <TemplateComments templateId={template.id} isAuthenticated={isAuthenticated} />}
                 </CardContent>
             </Card>
         </Container>

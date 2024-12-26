@@ -2,11 +2,19 @@ import { Typography, Box, Button, TextField, Checkbox, FormControlLabel } from "
 import { FormattedMessage } from 'react-intl';
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { postFormAction } from "../../store/api-actions";
 
 const TemplateQuestions = ({ template, isAuthenticated }) => {
+    const dispatch = useDispatch();
 
     const handleSubmitAnswers = (values) => {
-        console.log("Submitted answers:", values);
+        const transformedAnswers  = Object.entries(values.answers).reduce((acc, [key, value]) => {
+            const transformedKey = key.replace('_question', '_answer');
+            acc[transformedKey] = value;
+            return acc;
+        }, {});
+        dispatch(postFormAction({templateId: template.id, answers: transformedAnswers }));
     };
 
     const renderQuestionFields = (type, maxCount, errors, touched, values) => {

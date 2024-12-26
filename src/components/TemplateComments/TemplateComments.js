@@ -1,20 +1,33 @@
-import { Typography, Box, Button, TextField } from "@mui/material";
+import { Typography, Box, Button, TextField, Paper } from "@mui/material";
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCommentsAction, addCommentAction } from "../../store/api-actions";
+import { getComments } from "../../store/template-process/selectors";
 
-const TemplateComments = ({ isAuthenticated }) => {
+const TemplateComments = ({ templateId, isAuthenticated }) => {
     const { formatMessage } = useIntl();
+    const dispatch = useDispatch();
+    const comments = useSelector(getComments);
     const [comment, setComment] = useState("");
 
+    useEffect(() => {
+        dispatch(getCommentsAction(templateId));
+        const intervalId = setInterval(() => {
+            dispatch(getCommentsAction(templateId));
+        }, 5000);
+        return () => clearInterval(intervalId);
+    }, [dispatch, templateId]);
+
     const handleAddComment = () => {
-        console.log("Add comment:", comment);
+        dispatch(addCommentAction({ templateId, text: comment }));
         setComment("");
     };
 
     return (
         <Box mt={3}>
             {isAuthenticated ? (
-                <Box display="flex" flexDirection="column" gap={2}>
+                <Box display="flex" flexDirection="column" gap={2} mb={3}>
                     <TextField
                         fullWidth
                         required
@@ -40,6 +53,28 @@ const TemplateComments = ({ isAuthenticated }) => {
                     <FormattedMessage id='login_to_comment' />
                 </Typography>
             )}
+            <Box>
+                <Typography variant="h6" gutterBottom>
+                    <FormattedMessage id="comments" />
+                </Typography>
+                {comments.length > 0 ? (
+                    comments.map((comment, index) => (
+                        <Paper key={index} elevation={1} sx={{ padding: 2, marginBottom: 2 }}>
+                            <Box display="flex" justifyContent="space-between" mb={1}>
+                                <Typography variant="subtitle2">{comment.author.name}</Typography>
+                                <Typography variant="caption" color="textSecondary">
+                                    {new Date(comment.createdAt).toLocaleString()}
+                                </Typography>
+                            </Box>
+                            <Typography variant="body1">{comment.text}</Typography>
+                        </Paper>
+                    ))
+                ) : (
+                    <Typography variant="body2" color="textSecondary">
+                        <FormattedMessage id="no_comments_yet" />
+                    </Typography>
+                )}
+            </Box>
         </Box>
     );
 };

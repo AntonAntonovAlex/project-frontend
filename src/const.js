@@ -17,6 +17,8 @@ export const APIRoute = {
     Templates: '/template',
     PostTemplates: '/template/create',
     Topics: '/topics',
+    Form: '/form',
+    Comments: '/comments',
 };
 
 export const AppRoute = {
