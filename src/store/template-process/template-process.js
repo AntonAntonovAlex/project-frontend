@@ -1,12 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { NameSpace } from "../../const";
-import { getTemplatesAction, getTopicsAction, getTemplateByIdAction, getCommentsAction } from "../api-actions";
+import {
+    getTemplatesAction,
+    getTopicsAction,
+    getTemplateByIdAction,
+    getCommentsAction,
+    getLikesForTemplateAction
+} from "../api-actions";
 
 const initialState = {
     templates: [],
     topics: [],
-    template: {},
+    template: null,
     comments: [],
+    likesCount: 0,
+    isUserLiked: false,
 };
 
 export const templateProcess = createSlice({
@@ -28,13 +36,24 @@ export const templateProcess = createSlice({
             state.template = action.payload;
         })
         .addCase(getTemplateByIdAction.rejected, (state) => {
-            state.template = {};
+            state.template = null;
+        })
+        .addCase(getTemplateByIdAction.pending, (state) => {
+            state.template = null;
         })
         .addCase(getCommentsAction.fulfilled, (state, action) => {
             state.comments = action.payload;
         })
         .addCase(getCommentsAction.rejected, (state) => {
             state.comments = [];
+        })
+        .addCase(getLikesForTemplateAction.fulfilled, (state, action) => {
+            state.likesCount = action.payload.likesCount;
+            state.isUserLiked = action.payload.userLiked;
+        })
+        .addCase(getLikesForTemplateAction.rejected, (state) => {
+            state.likesCount = 0;
+            state.isUserLiked = false;
         })
     }
 });

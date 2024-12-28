@@ -19,6 +19,7 @@ export const APIRoute = {
     Topics: '/topics',
     Form: '/form',
     Comments: '/comments',
+    Likes: '/likes',
 };
 
 export const AppRoute = {

@@ -2,8 +2,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Container, Card, CardContent, Typography, Box, Button, Tabs, Tab } from "@mui/material";
 import { useState, useEffect } from "react";
-import { getTemplateByIdAction } from "../../store/api-actions";
-import { getTemplate } from "../../store/template-process/selectors";
+import { getTemplateByIdAction, getLikesForTemplateAction, toggleLikeAction } from "../../store/api-actions";
+import { getTemplate, getLikesCount, getIsUserLiked } from "../../store/template-process/selectors";
 import { getAuthorizationStatus } from "../../store/user-process/selectors";
 import { AuthorizationStatus } from "../../const";
 import { FormattedMessage } from 'react-intl';
@@ -15,18 +15,22 @@ const TemplateDetail = () => {
     const templateId = params.id;
     const dispatch = useDispatch();
     const template = useSelector(getTemplate);
+    const likesCount = useSelector(getLikesCount);
+    const isUserLiked = useSelector(getIsUserLiked);
     const authorizationStatus = useSelector(getAuthorizationStatus);
     const isAuthenticated = authorizationStatus === AuthorizationStatus.Auth;
     const [activeTab, setActiveTab] = useState(0);
 
     useEffect(() => {
         dispatch(getTemplateByIdAction(templateId));
+        dispatch(getLikesForTemplateAction(templateId));
     }, [dispatch, templateId]);
 
     if (!template) return <Typography><FormattedMessage id='loading' /></Typography>;
 
     const handleLike = () => {
         console.log("Liked template:", template.id);
+        dispatch(toggleLikeAction(template.id));
     };
 
     return (
@@ -57,7 +61,7 @@ const TemplateDetail = () => {
                     </Box>
                     <Box display="flex" alignItems="center" mb={3}>
                         <Typography variant="body2" color="textSecondary" mr={2}>
-                            <FormattedMessage id='likes' />: {template.likes || 0}
+                            <FormattedMessage id='likes' />: {likesCount}
                         </Typography>
                         <Button
                             variant="contained"
@@ -65,7 +69,12 @@ const TemplateDetail = () => {
                             onClick={handleLike}
                             disabled={!isAuthenticated}
                         >
-                            {isAuthenticated ? <FormattedMessage id='likes' /> : <FormattedMessage id='login_to_likes' />}
+                            {isAuthenticated
+                                ? isUserLiked 
+                                    ? <FormattedMessage id='unlike' /> 
+                                    : <FormattedMessage id='like' />
+                                : <FormattedMessage id='login_to_likes'/>
+                            }
                         </Button>
                     </Box>
 

@@ -1,5 +1,7 @@
-import { useIntl, FormattedMessage } from 'react-intl'; 
+import { useState } from 'react';
+import { useIntl, FormattedMessage } from 'react-intl';
 import { LANGUAGES } from "../../i18n/languages";
+import { Modal, Box, Typography, Button } from '@mui/material';
 import { useSelector, useDispatch } from "react-redux";
 import { getUserName } from "../../store/user-process/selectors";
 import { dropToken } from "../../services/token";
@@ -16,14 +18,12 @@ const Header = ({ handleLocaleChange }) => {
   const navigate = useNavigate();
   const isUsersPage = location.pathname === AppRoute.Users;
 
+  const [openLogoutModal, setOpenLogoutModal] = useState(false);
+
   const handleLogout = () => {
-    const confirmLogout = window.confirm(
-      `${userName}, ${formatMessage({ id: 'confirm_logout' })}`
-    );
-    if (confirmLogout) {
-      dispatch(logoutAction());
-      dropToken();
-    }
+    dispatch(logoutAction());
+    dropToken();
+    setOpenLogoutModal(false);
   };
 
   return (
@@ -41,12 +41,12 @@ const Header = ({ handleLocaleChange }) => {
           </button>
           <ul className="dropdown-menu" aria-labelledby="languageDropdown">
             {LANGUAGES.map(({ name, code }) => (
-                <li key={code}>
+              <li key={code}>
                 <button
-                    className="dropdown-item"
-                    onClick={() => handleLocaleChange(code)}
+                  className="dropdown-item"
+                  onClick={() => handleLocaleChange(code)}
                 >
-                    {name}
+                  {name}
                 </button>
               </li>
             ))}
@@ -76,7 +76,10 @@ const Header = ({ handleLocaleChange }) => {
           {userName ? (
             <div className="d-flex align-items-center gap-3">
               <span className="fw-bold">{userName}</span>
-              <button className="btn btn-outline-danger" onClick={handleLogout}>
+              <button
+                className="btn btn-outline-danger"
+                onClick={() => setOpenLogoutModal(true)}
+              >
                 <FormattedMessage id="logout" />
               </button>
             </div>
@@ -87,6 +90,46 @@ const Header = ({ handleLocaleChange }) => {
           )}
         </div>
       </div>
+
+      <Modal
+        open={openLogoutModal}
+        onClose={() => setOpenLogoutModal(false)}
+        aria-labelledby="logout-modal-title"
+        aria-describedby="logout-modal-description"
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 2,
+          }}
+        >
+          <Typography id="logout-modal-title" variant="h6" component="h2">
+            {userName}, <FormattedMessage id="confirm_logout" />
+          </Typography>
+          <Box mt={3} display="flex" justifyContent="space-between">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setOpenLogoutModal(false)}
+            >
+              <FormattedMessage id="cancel" />
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleLogout}
+            >
+              <FormattedMessage id="logout" />
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
     </nav>
   );
 };

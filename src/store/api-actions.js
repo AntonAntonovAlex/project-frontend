@@ -6,11 +6,16 @@ import { AppRoute } from "../const";
 
 export const loginAction = createAsyncThunk(
     'users/login',
-    async ({email, password}, {extra: { api }, dispatch}) => {
-      const { data } = await api.post(APIRoute.Login, {email, password});
-      saveToken(data.token);
-      dispatch(redirectToRoute(AppRoute.Main));
-      return data.user.name;
+    async ({email, password}, {extra: { api, toast }, dispatch}) => {
+      try {
+        const { data } = await api.post(APIRoute.Login, {email, password});
+        saveToken(data.token);
+        dispatch(redirectToRoute(AppRoute.Main));
+        return data.user.name;
+      } catch (error) {
+        //toast.error(error.message);
+      }
+      
     },
 );
 
@@ -93,5 +98,22 @@ export const addCommentAction = createAsyncThunk(
     //console.log('data - ', data.message);
     dispatch(getCommentsAction(templateId));
     //return data;
+  },
+);
+
+export const getLikesForTemplateAction = createAsyncThunk(
+  '/likes/:templateId',
+  async (templateId, {extra: { api }}) => {
+    const { data } = await api.get(`${APIRoute.Likes}/${templateId}`);
+    return data;
+  },
+);
+
+export const toggleLikeAction = createAsyncThunk(
+  '/likes',
+  async (templateId, {extra: { api, toast }, dispatch}) => {
+    const { data } = await api.post(APIRoute.Likes, {templateId: templateId});
+    dispatch(getLikesForTemplateAction(templateId));
+    toast.success(data.message);
   },
 );
