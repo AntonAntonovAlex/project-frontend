@@ -7,6 +7,7 @@ const initialState = {
     authorizationStatus: AuthorizationStatus.Unknown,
     userName: '',
     users: [],
+    theme: 'light',
 };
 
 export const userProcess = createSlice({
@@ -16,6 +17,9 @@ export const userProcess = createSlice({
         logoutAction: (state) => {
             state.userName = '';
             state.authorizationStatus = AuthorizationStatus.NoAuth;
+        },
+        toggleTheme: (state) => {
+            state.theme = state.theme === 'light' ? 'dark' : 'light';
         },
     },
     extraReducers(builder) {
@@ -53,4 +57,4 @@ export const userProcess = createSlice({
     }
 });
 
-export const {logoutAction} = userProcess.actions;
+export const {logoutAction, toggleTheme} = userProcess.actions;

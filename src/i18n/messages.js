@@ -51,6 +51,8 @@ export const messages = {
       required_comment: 'This field is required',
       no_comments_yet: 'No comments yet',
       yes_or_no: 'Yes/No',
+      dark_mode: 'dark mode',
+      light_mode: 'light mode',
     },
     [LOCALES.POLISH]: {
       language: 'Polski',
@@ -102,5 +104,7 @@ export const messages = {
       required_comment: 'To pole jest wymagane',
       no_comments_yet: 'Jeszcze nie ma komentarzy',
       yes_or_no: 'Tak/Nie',
+      dark_mode: 'tryb ciemny',
+      light_mode: 'tryb światła',
     }
   }

@@ -14,8 +14,8 @@ const TemplateComments = ({ templateId, isAuthenticated }) => {
 
     useEffect(() => {
         dispatch(getCommentsAction(templateId));
-        //const socket = new WebSocket(`ws://localhost:3000/ws/comments`);
-        const socket = new WebSocket(`ws://project-backend-vf6r.onrender.com/ws/comments`);
+        const socket = new WebSocket(`ws://localhost:3000/ws/comments`);
+        //const socket = new WebSocket(`ws://project-backend-vf6r.onrender.com/ws/comments`);
         setWs(socket);
 
         socket.onopen = () => {

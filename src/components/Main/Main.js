@@ -31,7 +31,6 @@ const Main = () => {
                         boxShadow: 3,
                         maxWidth: 245,
                         margin: '0 auto',
-                        backgroundColor: '#f5f5f5',
                         justifyContent: 'center',
                         alignItems: 'center',
                         }}

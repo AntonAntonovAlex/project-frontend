@@ -14,10 +14,20 @@ import PrivateRoute from '../private-route/private-route';
 import { useSelector } from 'react-redux';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import TemplateDetail from '../TemplateDetail/TemplateDetail';
+import { getTheme } from '../../store/user-process/selectors';
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 
 function App() {
   const [currentLocale, setCurrentLocale] = useState(getInitialLocale());
   const authorizationStatus = useSelector(getAuthorizationStatus);
+  const theme = useSelector(getTheme);
+  const muiTheme = createTheme({
+    palette: {
+      mode: theme,
+    },
+  });
+
   const handleLocaleChange = (value) => {
     setCurrentLocale(value);
     localStorage.setItem('locale', value);
@@ -29,8 +39,9 @@ function App() {
   };
 
   return (
-    <IntlProvider messages={messages[currentLocale]} locale={currentLocale} defaultLocale={LOCALES.ENGLISH}>
-      <>
+    <ThemeProvider theme={muiTheme}>
+      <CssBaseline />
+      <IntlProvider messages={messages[currentLocale]} locale={currentLocale} defaultLocale={LOCALES.ENGLISH}>
         <Header handleLocaleChange={handleLocaleChange} />
         <Routes>
           <Route path={AppRoute.Main} element={<Main />}/>
@@ -49,8 +60,8 @@ function App() {
           <Route path={AppRoute.Register} element={<Register />}/>
           <Route path={AppRoute.Users} element={<UsersTable />}/>
         </Routes>
-      </>
-    </IntlProvider>
+      </IntlProvider>
+    </ThemeProvider>
   );
 }
 
