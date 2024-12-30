@@ -95,9 +95,7 @@ export const addCommentAction = createAsyncThunk(
   async ({templateId, text}, {extra: { api, toast }, dispatch}) => {
     const { data } = await api.post(APIRoute.Comments, {templateId, text});
     toast.success(data.message);
-    //console.log('data - ', data.message);
-    dispatch(getCommentsAction(templateId));
-    //return data;
+    //dispatch(getCommentsAction(templateId));
   },
 );
 

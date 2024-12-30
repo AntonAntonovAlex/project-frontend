@@ -10,13 +10,32 @@ const TemplateComments = ({ templateId, isAuthenticated }) => {
     const dispatch = useDispatch();
     const comments = useSelector(getComments);
     const [comment, setComment] = useState("");
+    const [ws, setWs] = useState(null);
 
     useEffect(() => {
         dispatch(getCommentsAction(templateId));
-        const intervalId = setInterval(() => {
-            dispatch(getCommentsAction(templateId));
-        }, 5000);
-        return () => clearInterval(intervalId);
+        //const socket = new WebSocket(`ws://localhost:3000/ws/comments`);
+        const socket = new WebSocket(`ws://project-backend-vf6r.onrender.com/ws/comments`);
+        setWs(socket);
+
+        socket.onopen = () => {
+            console.log("WebSocket connection established.");
+        };
+        socket.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            if (message.type === 'new_comment') {
+                dispatch(getCommentsAction(templateId));
+            }
+        };
+        socket.onclose = () => {
+            console.log("WebSocket connection closed.");
+        };
+        socket.onerror = (error) => {
+            console.error("WebSocket error:", error);
+        };
+        return () => {
+            socket.close();
+        };
     }, [dispatch, templateId]);
 
     const handleAddComment = () => {
