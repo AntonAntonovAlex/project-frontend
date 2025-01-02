@@ -9,6 +9,7 @@ const REQUEST_TIMEOUT = 5000;
 const StatusCodeMapping = {
   [StatusCodes.BAD_REQUEST]: true,
   [StatusCodes.UNAUTHORIZED]: true,
+  [StatusCodes.FORBIDDEN]: true,
   [StatusCodes.NOT_FOUND]: true
 };
 const shouldDisplayError = (response) => !!StatusCodeMapping[response.status];

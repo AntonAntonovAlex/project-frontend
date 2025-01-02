@@ -6,16 +6,11 @@ import { AppRoute } from "../const";
 
 export const loginAction = createAsyncThunk(
     'users/login',
-    async ({email, password}, {extra: { api, toast }, dispatch}) => {
-      try {
+    async ({email, password}, {extra: { api }, dispatch}) => {
         const { data } = await api.post(APIRoute.Login, {email, password});
         saveToken(data.token);
         dispatch(redirectToRoute(AppRoute.Main));
         return data.user.name;
-      } catch (error) {
-        //toast.error(error.message);
-      }
-      
     },
 );
 
@@ -23,9 +18,7 @@ export const registerAction = createAsyncThunk(
     'users/register',
     async ({name, email, password}, {extra: { api }}) => {
       const { data } = await api.post(APIRoute.Register, {name, email, password});
-      //console.log(data.token);
       saveToken(data.token);
-      //dispatch(redirectToRoute(AppRoute.Main));
       return data.user.name;
     },
 );
@@ -70,6 +63,19 @@ export const getTemplateByIdAction = createAsyncThunk(
   },
 );
 
+export const deleteTemplateAction = createAsyncThunk(
+  '/template/:id',
+  async (id, {extra: { api, toast }, dispatch}) => {
+    try {
+    const { data } = await api.delete(`${APIRoute.Templates}/${id}`);
+    toast.success(data.message);
+    dispatch(redirectToRoute(AppRoute.Main));
+  } catch {
+    dispatch(redirectToRoute(AppRoute.Main));
+  }
+  },
+);
+
 export const postTemplateAction = createAsyncThunk(
   '/template/create',
   async (formattedData, {extra: { api, toast }, dispatch}) => {
@@ -94,7 +100,6 @@ export const postFormAction = createAsyncThunk(
     const { data } = await api.post(APIRoute.Form, {templateId, answers});
     toast.success(data.message);
     dispatch(redirectToRoute(AppRoute.Main));
-    //return data;
   },
 );
 
@@ -111,7 +116,6 @@ export const addCommentAction = createAsyncThunk(
   async ({templateId, text}, {extra: { api, toast }, dispatch}) => {
     const { data } = await api.post(APIRoute.Comments, {templateId, text});
     toast.success(data.message);
-    //dispatch(getCommentsAction(templateId));
   },
 );
 

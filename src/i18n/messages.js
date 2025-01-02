@@ -58,6 +58,9 @@ export const messages = {
       description: 'Description',
       form_count: 'Form count',
       actions: 'Actions',
+      delete: 'delete',
+      delete_template: 'Delete template',
+      confirm_delete_template: 'Are you sure you want to delete this template?',
     },
     [LOCALES.POLISH]: {
       language: 'Polski',
@@ -116,5 +119,8 @@ export const messages = {
       description: 'Opis',
       form_count: 'Liczba formularzy',
       actions: 'Akcje',
+      delete: 'usuwać',
+      delete_template: 'Usuń szablon',
+      confirm_delete_template: 'Czy na pewno chcesz usunąć ten szablon?',
     }
   }

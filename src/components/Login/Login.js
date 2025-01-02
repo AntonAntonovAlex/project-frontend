@@ -16,7 +16,6 @@ const Login = () => {
 
     const onSubmit = (data) => {
         dispatch(loginAction({email: data.email, password: data.password}));
-        //dispatch(redirectToRoute(AppRoute.Users));
     };
 
     return (
