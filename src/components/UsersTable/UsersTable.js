@@ -3,11 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getUsersAction } from '../../store/api-actions';
 import { getUsers, getAuthorizationStatus } from '../../store/user-process/selectors';
 import { FormattedMessage } from 'react-intl';
+import { getTheme } from '../../store/user-process/selectors';
 
 const UsersTable = () => {
   const dispatch = useDispatch();
   const users = useSelector(getUsers);
   const authorizationStatus = useSelector(getAuthorizationStatus);
+  const theme = useSelector(getTheme);
 
   useEffect(() => {
     dispatch(getUsersAction());
@@ -17,7 +19,7 @@ const UsersTable = () => {
     <div className="container mt-5">
       <h3 className="text-center mb-4"><FormattedMessage id='user' /></h3>
       <div className="table-responsive">
-        <table className="table table-bordered table-hover">
+        <table className={`table table-bordered table-hover ${theme === 'light' ? 'table-light' : 'table-dark'}`}>
           <thead className="table-light">
             <tr>
               <th>ID</th>

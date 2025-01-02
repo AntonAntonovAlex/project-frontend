@@ -13,3 +13,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.table-dark {
+  background-color: #424242;
+  color: white;
+}
+
+.table-light {
+  background-color: white;
+  color: black;
+}
