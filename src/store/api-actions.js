@@ -46,6 +46,22 @@ export const getTemplatesAction = createAsyncThunk(
   },
 );
 
+export const getLatestTemplatesAction = createAsyncThunk(
+  '/templates/latest',
+  async (_arg, {extra: { api }}) => {
+    const { data } = await api.get(APIRoute.LatestTemplates);
+    return data.templates;
+  },
+);
+
+export const getMostPopularTemplatesAction = createAsyncThunk(
+  '/templates/popular',
+  async (_arg, {extra: { api }}) => {
+    const { data } = await api.get(APIRoute.MostPopularTemplates);
+    return data.templates;
+  },
+);
+
 export const getTemplateByIdAction = createAsyncThunk(
   '/template/:id',
   async (id, {extra: { api }}) => {

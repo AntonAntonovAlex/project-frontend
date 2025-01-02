@@ -1,19 +1,21 @@
-import { Container, Card, CardMedia, CardContent, Typography, CardActions, Button } from '@mui/material';
+import { Container, Card, CardMedia, CardContent, Typography, CardActions, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material'; 
 import Grid from '@mui/material/Grid2';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getTemplatesAction } from '../../store/api-actions';
-import { getTemplates } from '../../store/template-process/selectors';
+import { getLatestTemplatesAction, getMostPopularTemplatesAction } from '../../store/api-actions';
+import { getLatestTemplates, getMostPopularTemplates } from '../../store/template-process/selectors';
 import { FormattedMessage } from 'react-intl';
 import { redirectToRoute } from '../../store/action';
 import { AppRoute } from '../../const';
 
 const Main = () => {
     const dispatch = useDispatch();
-    const templates = useSelector(getTemplates);
+    const latestTemplates = useSelector(getLatestTemplates);
+    const popularTemplates = useSelector(getMostPopularTemplates);
 
     useEffect(() => {
-        dispatch(getTemplatesAction());
+        dispatch(getLatestTemplatesAction());
+        dispatch(getMostPopularTemplatesAction());
     }, [dispatch]);
 
     return (
@@ -64,7 +66,7 @@ const Main = () => {
                         </CardActions>
                     </Card>
                 </Grid>
-                {templates.map((template) => (
+                {latestTemplates.map((template) => (
                 <Grid size={{xs:12, sm:6, md:3}} key={template.id}>
                     <Card sx={{
                         height: '100%',
@@ -104,6 +106,41 @@ const Main = () => {
                 </Grid>
                 ))}
             </Grid>
+            <Typography variant="h5" component="h2" align="center" gutterBottom sx={{ marginTop: 4 }}>
+                <FormattedMessage id='popular_templates' />
+            </Typography>
+            <TableContainer component={Paper}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell><FormattedMessage id='template_name' /></TableCell>
+                            <TableCell><FormattedMessage id='description' /></TableCell>
+                            <TableCell><FormattedMessage id='author' /></TableCell>
+                            <TableCell><FormattedMessage id='form_count' /></TableCell>
+                            <TableCell><FormattedMessage id='actions' /></TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {popularTemplates.map((template) => (
+                            <TableRow key={template.id}>
+                                <TableCell>{template.title}</TableCell>
+                                <TableCell>{template.description}</TableCell>
+                                <TableCell>{template.authorName}</TableCell>
+                                <TableCell>{template.formCount}</TableCell>
+                                <TableCell>
+                                    <Button
+                                        size="small"
+                                        color="primary"
+                                        onClick={() => dispatch(redirectToRoute(`/template/${template.id}`))}
+                                    >
+                                        <FormattedMessage id='view_details' />
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </Container>
     );
 };

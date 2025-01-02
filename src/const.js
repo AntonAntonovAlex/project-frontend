@@ -18,6 +18,8 @@ export const APIRoute = {
     Logout: '/logout',
     Users: '/users',
     Templates: '/template',
+    LatestTemplates: '/templates/latest',
+    MostPopularTemplates: '/templates/popular',
     PostTemplates: '/template/create',
     Topics: '/topics',
     Form: '/form',

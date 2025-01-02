@@ -53,6 +53,11 @@ export const messages = {
       yes_or_no: 'Yes/No',
       dark_mode: 'dark mode',
       light_mode: 'light mode',
+      popular_templates: 'Popular Templates',
+      template_name: 'Template name',
+      description: 'Description',
+      form_count: 'Form count',
+      actions: 'Actions',
     },
     [LOCALES.POLISH]: {
       language: 'Polski',
@@ -106,5 +111,10 @@ export const messages = {
       yes_or_no: 'Tak/Nie',
       dark_mode: 'tryb ciemny',
       light_mode: 'tryb światła',
+      popular_templates: 'Popularne Szablony',
+      template_name: 'Nazwa szablonu',
+      description: 'Opis',
+      form_count: 'Liczba formularzy',
+      actions: 'Akcje',
     }
   }
