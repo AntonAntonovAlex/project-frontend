@@ -7,7 +7,8 @@ import {
     getCommentsAction,
     getLikesForTemplateAction,
     getLatestTemplatesAction,
-    getMostPopularTemplatesAction
+    getMostPopularTemplatesAction,
+    getUserTemplatesAction
 } from "../api-actions";
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
     isUserLiked: false,
     latestTemplates: [],
     mostPopularTemplates: [],
+    userTemplates: [],
 };
 
 export const templateProcess = createSlice({
@@ -70,6 +72,12 @@ export const templateProcess = createSlice({
         })
         .addCase(getMostPopularTemplatesAction.rejected, (state) => {
             state.mostPopularTemplates = [];
+        })
+        .addCase(getUserTemplatesAction.fulfilled, (state, action) => {
+            state.userTemplates = action.payload;
+        })
+        .addCase(getUserTemplatesAction.rejected, (state) => {
+            state.userTemplates = [];
         })
     }
 });

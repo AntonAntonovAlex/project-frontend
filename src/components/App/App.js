@@ -17,6 +17,8 @@ import TemplateDetail from '../TemplateDetail/TemplateDetail';
 import { getTheme } from '../../store/user-process/selectors';
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import UserTemplates from '../UserTemplates/UserTemplates';
+import SalesforceForm from '../SalesforceForm/SalesforceForm';
 
 function App() {
   const [currentLocale, setCurrentLocale] = useState(getInitialLocale());
@@ -52,6 +54,26 @@ function App() {
                 authorizationStatus={authorizationStatus}
               >
                 <CreateTemplate />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={AppRoute.UserTemplates}
+            element={
+              <PrivateRoute
+                authorizationStatus={authorizationStatus}
+              >
+                <UserTemplates />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={AppRoute.SalesforceForm}
+            element={
+              <PrivateRoute
+                authorizationStatus={authorizationStatus}
+              >
+                <SalesforceForm />
               </PrivateRoute>
             }
           />

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCommentsAction, addCommentAction } from "../../store/api-actions";
 import { getComments } from "../../store/template-process/selectors";
+import { WEB_SOCKEK_URL } from "../../const";
 
 const TemplateComments = ({ templateId, isAuthenticated }) => {
     const { formatMessage } = useIntl();
@@ -14,8 +15,7 @@ const TemplateComments = ({ templateId, isAuthenticated }) => {
 
     useEffect(() => {
         dispatch(getCommentsAction(templateId));
-        //const socket = new WebSocket(`ws://localhost:3000/ws/comments`);
-        const socket = new WebSocket(`ws://project-backend-vf6r.onrender.com/ws/comments`);
+        const socket = new WebSocket(WEB_SOCKEK_URL);
         setWs(socket);
 
         socket.onmessage = (event) => {

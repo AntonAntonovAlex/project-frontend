@@ -61,6 +61,9 @@ export const messages = {
       delete: 'delete',
       delete_template: 'Delete template',
       confirm_delete_template: 'Are you sure you want to delete this template?',
+      my_templates: 'My templates',
+      create_salesforce_account: 'Create Salesforce Account',
+      salesforce_integration_form: 'Salesforce Integration Form',
     },
     [LOCALES.POLISH]: {
       language: 'Polski',
@@ -122,5 +125,8 @@ export const messages = {
       delete: 'usuwać',
       delete_template: 'Usuń szablon',
       confirm_delete_template: 'Czy na pewno chcesz usunąć ten szablon?',
+      my_templates: 'Moje szablony',
+      create_salesforce_account: 'Utwórz konto Salesforce',
+      salesforce_integration_form: 'Formularz integracji Salesforce',
     }
   }

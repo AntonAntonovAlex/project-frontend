@@ -98,7 +98,12 @@ const Header = ({ handleLocaleChange }) => {
             )}
             {userName ? (
               <div className="d-flex align-items-center gap-3">
-                <span className="fw-bold">{userName}</span>
+                <span
+                  className="fw-bold"
+                  onClick={() => navigate(AppRoute.UserTemplates)}
+                >
+                  {userName}
+                </span>
                 <button
                   className="btn btn-outline-danger"
                   onClick={() => setOpenLogoutModal(true)}

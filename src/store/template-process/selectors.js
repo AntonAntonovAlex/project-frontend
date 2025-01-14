@@ -8,3 +8,4 @@ export const getLikesCount = (state) => state[NameSpace.Template].likesCount;
 export const getIsUserLiked = (state) => state[NameSpace.Template].isUserLiked;
 export const getLatestTemplates = (state) => state[NameSpace.Template].latestTemplates;
 export const getMostPopularTemplates = (state) => state[NameSpace.Template].mostPopularTemplates;
+export const getUserTemplates = (state) => state[NameSpace.Template].userTemplates;

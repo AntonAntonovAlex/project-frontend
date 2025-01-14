@@ -3,6 +3,8 @@ import { saveToken } from "../services/token";
 import { APIRoute } from "../const";
 import { redirectToRoute } from "./action";
 import { AppRoute } from "../const";
+import axios from 'axios';
+import { SALESFORCE_URL } from "../const";
 
 export const loginAction = createAsyncThunk(
     'users/login',
@@ -16,9 +18,10 @@ export const loginAction = createAsyncThunk(
 
 export const registerAction = createAsyncThunk(
     'users/register',
-    async ({name, email, password}, {extra: { api }}) => {
+    async ({name, email, password}, {extra: { api }, dispatch}) => {
       const { data } = await api.post(APIRoute.Register, {name, email, password});
       saveToken(data.token);
+      dispatch(redirectToRoute(AppRoute.Main));
       return data.user.name;
     },
 );
@@ -135,3 +138,16 @@ export const toggleLikeAction = createAsyncThunk(
     toast.success(data.message);
   },
 );
+
+export const getUserTemplatesAction = createAsyncThunk(
+  '/templates',
+  async (_arg, {extra: { api }}) => {
+    const { data } = await api.get(APIRoute.UserTemplates);
+    return data.templates;
+  },
+);
+
+export const sendSalesforceData = async (formData) => {
+  const response = await axios.post(SALESFORCE_URL, formData);
+  return response.data;
+};
