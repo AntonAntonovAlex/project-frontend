@@ -4,7 +4,7 @@ import { APIRoute } from "../const";
 import { redirectToRoute } from "./action";
 import { AppRoute } from "../const";
 import axios from 'axios';
-import { SALESFORCE_URL } from "../const";
+import { SALESFORCE_URL, JIRA_URL } from "../const";
 
 export const loginAction = createAsyncThunk(
     'users/login',
@@ -12,7 +12,7 @@ export const loginAction = createAsyncThunk(
         const { data } = await api.post(APIRoute.Login, {email, password});
         saveToken(data.token);
         dispatch(redirectToRoute(AppRoute.Main));
-        return data.user.name;
+        return data.user;
     },
 );
 
@@ -22,7 +22,7 @@ export const registerAction = createAsyncThunk(
       const { data } = await api.post(APIRoute.Register, {name, email, password});
       saveToken(data.token);
       dispatch(redirectToRoute(AppRoute.Main));
-      return data.user.name;
+      return data.user;
     },
 );
 
@@ -150,4 +150,13 @@ export const getUserTemplatesAction = createAsyncThunk(
 export const sendSalesforceData = async (formData) => {
   const response = await axios.post(SALESFORCE_URL, formData);
   return response.data;
+};
+
+export const createTicket = async (ticketData) => {
+  try {
+    const response = await axios.post(JIRA_URL, ticketData);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };

@@ -8,6 +8,8 @@ const initialState = {
     userName: '',
     users: [],
     theme: 'light',
+    userEmail: '',
+    location: '',
 };
 
 export const userProcess = createSlice({
@@ -16,31 +18,30 @@ export const userProcess = createSlice({
     reducers: {
         logoutAction: (state) => {
             state.userName = '';
+            state.userEmail = '';
             state.authorizationStatus = AuthorizationStatus.NoAuth;
         },
         toggleTheme: (state) => {
             state.theme = state.theme === 'light' ? 'dark' : 'light';
         },
+        saveLocation: (state, action) => {
+            state.location = action.payload;
+        },
     },
     extraReducers(builder) {
       builder
-        /*.addCase(checkAuthAction.fulfilled, (state, action) => {
-          state.authorizationStatus = AuthorizationStatus.Auth;
-          state.userName = action.payload;
-        })
-        .addCase(checkAuthAction.rejected, (state) => {
-          state.authorizationStatus = AuthorizationStatus.NoAuth;
-        })*/
         .addCase(loginAction.fulfilled, (state, action) => {
             state.authorizationStatus = AuthorizationStatus.Auth;
-            state.userName = action.payload;
+            state.userName = action.payload.name;
+            state.userEmail = action.payload.email;
         })
         .addCase(loginAction.rejected, (state) => {
             state.authorizationStatus = AuthorizationStatus.NoAuth;
         })
         .addCase(registerAction.fulfilled, (state, action) => {
             state.authorizationStatus = AuthorizationStatus.Auth;
-            state.userName = action.payload;
+            state.userName = action.payload.name;
+            state.userEmail = action.payload.email;
         })
         .addCase(registerAction.rejected, (state) => {
             state.authorizationStatus = AuthorizationStatus.NoAuth;
@@ -51,10 +52,7 @@ export const userProcess = createSlice({
         .addCase(getUsersAction.rejected, (state) => {
             state.users = [];
         })
-        /*.addCase(logoutAction.fulfilled, (state) => {
-          state.authorizationStatus = AuthorizationStatus.NoAuth;
-        });*/
     }
 });
 
-export const {logoutAction, toggleTheme} = userProcess.actions;
+export const {logoutAction, toggleTheme, saveLocation} = userProcess.actions;

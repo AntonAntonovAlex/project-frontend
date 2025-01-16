@@ -9,6 +9,7 @@ import { redirectToRoute } from '../../store/action';
 import { AppRoute } from '../../const';
 import { useNavigate } from 'react-router-dom';
 
+
 const UserTemplates = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();

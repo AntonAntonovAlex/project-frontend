@@ -64,6 +64,7 @@ export const messages = {
       my_templates: 'My templates',
       create_salesforce_account: 'Create Salesforce Account',
       salesforce_integration_form: 'Salesforce Integration Form',
+      create_support_ticket: 'Create Support Ticket',
     },
     [LOCALES.POLISH]: {
       language: 'Polski',
@@ -128,5 +129,6 @@ export const messages = {
       my_templates: 'Moje szablony',
       create_salesforce_account: 'Utwórz konto Salesforce',
       salesforce_integration_form: 'Formularz integracji Salesforce',
+      create_support_ticket: 'Utwórz zgłoszenie pomocy technicznej',
     }
   }

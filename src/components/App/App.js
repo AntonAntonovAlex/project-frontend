@@ -19,6 +19,8 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import UserTemplates from '../UserTemplates/UserTemplates';
 import SalesforceForm from '../SalesforceForm/SalesforceForm';
+import Footer from '../Footer/Footer';
+import CreateTicketPage from '../CreateTicketPage/CreateTicketPage';
 
 function App() {
   const [currentLocale, setCurrentLocale] = useState(getInitialLocale());
@@ -77,11 +79,22 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+            path={AppRoute.CreateTicketPage}
+            element={
+              <PrivateRoute
+                authorizationStatus={authorizationStatus}
+              >
+                <CreateTicketPage />
+              </PrivateRoute>
+            }
+          />
           <Route path={AppRoute.Template} element={<TemplateDetail />}/>
           <Route path={AppRoute.Login} element={<Login />}/>
           <Route path={AppRoute.Register} element={<Register />}/>
           <Route path={AppRoute.Users} element={<UsersTable />}/>
         </Routes>
+        <Footer />
       </IntlProvider>
     </ThemeProvider>
   );
